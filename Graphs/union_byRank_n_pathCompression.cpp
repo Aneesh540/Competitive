@@ -8,8 +8,11 @@ int root(vector<int>& vec, int node){
     if(vec[node] < 0)
         return node;
 
-    // cout<<"oll correct"<<endl;
-    return root(vec, vec[node]);
+
+    int rootOfNode = root(vec, vec[node]);
+    vec[node] = rootOfNode;
+
+    return rootOfNode;
     
 }
 
@@ -30,42 +33,48 @@ void UnionByRank(vector<int>& vec, int a, int b){
     int rankA = abs(vec[rootA]);
     int rankB = abs(vec[rootB]);
 
-    cout<<rootA<<rootB<<rankA<<rankB<<endl;
+
+    if(rootA != rootB){
 
     if(rankA > rankB){
         // 'b' will become child of 'a',
-        vec[rootB] = rootA;         // make b's root parent as that of 'a'
         vec[rootA] += vec[rootB];   // updating total element in a
+        vec[rootB] = rootA;         // make b's root parent as that of 'a'
     }
     
     else{
-        vec[rootA] = rootB;         // make a's root parent as that of 'b'
         vec[rootB] += vec[rootA];   // updating total element in b
+        vec[rootA] = rootB;         // make a's root parent as that of 'b'
+        }
     }
 
-    cout<<"Done"<<endl;
 
 }
 
+
+int FindPathCompression(vector<int> vec, int a){
+    int rootA  = root(vec, a);
+
+    vec[a] = rootA;
+
+    return 
+
+
+}
 
 int main(){
 
     vector<int> v(4,-1);
 
     cout<<root(v,4)<<root(v,3)<<endl;
-    // print(v);
 
-    // for(int i=0; i<5;++i){
-    //     cout<<root(v,i)<<endl;
-    // }
-
-    UnionByRank(v,4,3);
+    UnionByRank(v,3,2);
         print(v);
 
-    UnionByRank(v,2,4);
+    UnionByRank(v,1,3);
         print(v);
 
-    UnionByRank(v,2,3);
+    UnionByRank(v,1,2);
 
     print(v);
 

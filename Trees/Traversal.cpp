@@ -2,15 +2,14 @@
 #include<queue>
 using namespace std;
 
-struct Node
-{
+struct Node{
     int data;
     Node *left;
     Node *right;
 };
 
-Node *createNode(int data)
-{
+
+Node *createNewNode(int data){
     Node *newNode = new Node();
 
     newNode->data = data;
@@ -20,21 +19,47 @@ Node *createNode(int data)
     return newNode;
 }
 
-Node *insert(Node *root, int data)
-{
 
-    if (root == NULL)
-        root = createNode(data);
+void insert(Node*& root, int value){
     
-    else if (data < root->data)
-        root->left = insert(root->left, data);
+    if(root == NULL){
     
-    else
-        root->right = insert(root->right, data);
+        root =  createNewNode(value);
+    }
     
+    else if(root->data < value){
+        // insert right
+        
+        insert(root->right,value);
+    }
     
-    return root;
+    else{
+        // insert left side
+        insert(root->left,value);
+    }
 }
+
+
+void preOrder(Node* root){
+
+    if(root != NULL){
+        cout<<root->data<<"-> ";
+        preOrder(root->left);
+        preOrder(root->right);
+
+    }
+}
+
+
+void inOrder(Node* root){
+
+    if(root != NULL){
+    inOrder(root->left);
+    cout<<root->data<<"-> ";
+    inOrder(root->right);
+    }
+}
+
 
 void level_order_traversal(Node* root){
     // space & time complexity
@@ -59,16 +84,33 @@ void level_order_traversal(Node* root){
 
 }
 
+
 int main(){
 
     Node *root_pointer = NULL;
 
-    root_pointer = insert(root_pointer, 4);
-    root_pointer = insert(root_pointer, 2);
-    root_pointer = insert(root_pointer, 7);
-    root_pointer = insert(root_pointer, 9);
-    root_pointer = insert(root_pointer, 3);
-    root_pointer = insert(root_pointer, 1);
+    insert(root_pointer, 4);
+    insert(root_pointer, 2);
+    insert(root_pointer, 7);
+    insert(root_pointer, 9);
+    insert(root_pointer, 3);
+    insert(root_pointer, 1);
+
+            //         4
+            //        /  \
+            //       /    \
+            //       2     7
+            //     /  \     \
+            //    1    3     \
+            //               9
 
     level_order_traversal(root_pointer);
+    cout<<"\nPreorder traversal is :"<<endl;
+    preOrder(root_pointer);
+
+
+    cout<<endl;
+    cout<<"\nInroder traversal is :"<<endl;
+    inOrder(root_pointer);
+
 }

@@ -34,7 +34,7 @@ class LinkedList{
             
         }
 
-        bool isCyclePresent(){
+        Node* isCyclePresent(){
             Node* rabbit = head;    // rabbit will move 2 times the tortoise
             Node* tortoise = head;
 
@@ -47,7 +47,7 @@ class LinkedList{
                 // ALSO WE CANNOT MOVE RABBIT 2 STEPS BECAUSE IT IS ALREADY AT nullptr
                 if(rabbit == nullptr){
                     cout<<"not present "<<endl;
-                    return false;
+                    return nullptr;
                     }
                 
                 else if(rabbit != nullptr)
@@ -55,7 +55,7 @@ class LinkedList{
                 
                 if(rabbit == tortoise){// if they both meet then cycle is present
                     cout<<"present "<<endl;
-                    return true;
+                    return tortoise;
                 }
 
             }
@@ -65,25 +65,44 @@ class LinkedList{
             // this method will connect the last node->next (which is nullptr initially)
             // to the specified node's pointer 
 
-            Node* cursor = head;
-            Node* specifiedNode;
-            int count = 1;
+            Node* cursor;
+            Node* specifiedNode = head;
+            
 
-            while(cursor->next != nullptr){
-                // loop will terminate when cursor is pointing to last node
-                if(count == nodeToConnect){
-                    specifiedNode = cursor;
-                }
-
-                else
-                    count++;
-
-                cursor = cursor->next;
-
+            for(int i=1; i<nodeToConnect; ++i){
+                specifiedNode = specifiedNode->next;
             }
 
+            cursor = specifiedNode;
+            while(cursor->next != nullptr){
+                cursor = cursor->next;
+            }
+
+            cout<<"creating cycle @ "<<specifiedNode->data<<endl;
             cursor->next = specifiedNode;
 
+        }
+
+        Node* headOfCycle(){
+            Node* a = head;
+            Node* b = isCyclePresent();
+
+            if(b == nullptr){
+                cout<<"cycle not present"<<endl;
+                return nullptr;
+            }
+
+            while(1){
+
+                if(a == b)
+                    break;
+                
+                a = a->next;
+                b = b->next;
+            }
+
+            cout<<"starting point = "<<a->data<<endl;
+            return a;
         }
 
 };
@@ -101,9 +120,10 @@ int main(){
 
     mylist.isCyclePresent();
 
-    mylist.createCycle(3);
+    mylist.createCycle(4);
 
     mylist.isCyclePresent();
+    mylist.headOfCycle();
 
 
 }

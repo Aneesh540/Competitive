@@ -24,10 +24,24 @@ def merge(arr, low, mid, high):
             temp[i] = arr[ptr2]
             ptr2 += 1
 
-        print(temp)
+        j = 0
+        for i in range(low,high):
+            arr[i] = temp[j]
+            j += 1 
+    print(arr)
+    print("-----> ", temp)
 
+def mergeSort(arr,low,high):
+
+    if low < high:
+        mid = (low + high)//2
+        mergeSort(arr,low,mid)
+        mergeSort(arr,mid+1,high)
+        merge(arr,low,mid,high)
 
 if __name__ == "__main__":
-    arr = [11,7,12]
-    merge(arr,0,len(arr)//2,len(arr))
+    arr = [11,7,12,2,3,19]
+    merge(arr,0,2,5)
+    mergeSort(arr,0,len(arr)-1)
+    print(arr)
         

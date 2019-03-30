@@ -37,88 +37,85 @@ bool sortbythird(const threePair& a, const threePair& b){
 }
 
 
-// int root(vector<int>& v, int node){
+int root(vector<int>& v, int node){
 
-//     if(v[node] < 0)
-//         return node;
-
-//     return root(v, v[node]);
-
-// }
-
-
-// void Union(vector<int>& v, int a, int b){
-
-//     int rootA = root(v,a);
-//     int rootB = root(v,b);
-
-//     int rankA = abs(v[rootA]);
-//     int rankB = abs(v[rootB]);
-
-//     if(rootA != rootB){
-
-//         if(rankA > rankB){
-//             // B will become child of A
-            
-//             v[rootA] += v[rootB];
-//             v[rootB] = rootA;
-
-//         }
-
-//         else{
-        
-//         v[rootB] += v[rootA];
-//         v[rootA] = rootB;
-//         }
-
-//     }
-
-// }
-
-
-
-int root(vector<int>& vec, int node){
-
-    if(vec[node] < 0)
+    if(v[node] < 0)
         return node;
 
+    return root(v, v[node]);
 
-    int rootOfNode = root(vec, vec[node]);
-    vec[node] = rootOfNode;
+}
 
-    return rootOfNode;
-    
+
+void Union(vector<int>& v, int a, int b){
+
+    int rootA = root(v,a);
+    int rootB = root(v,b);
+
+    int rankA = abs(v[rootA]);
+    int rankB = abs(v[rootB]);
+
+    if(rootA != rootB){
+
+        if(rankA > rankB){
+            // B will become child of A
+            
+            v[rootA] += v[rootB];
+            v[rootB] = rootA;
+
+        }
+
+        else{
+        
+        v[rootB] += v[rootA];
+        v[rootA] = rootB;
+        }
+
+    }
+
 }
 
 
 
-void UnionByRank(vector<int>& vec, int a, int b){
-
-    int rootA = root(vec,a);
-    int rootB = root(vec,b);
-
-    int rankA = abs(vec[rootA]);
-    int rankB = abs(vec[rootB]);
 
 
-    if(rootA != rootB){
 
-    if(rankA > rankB){
-        // 'b' will become child of 'a',
-        vec[rootA] += vec[rootB];   // updating total element in a
-        vec[rootB] = rootA;         // make b's root parent as that of 'a'
-    }
+int Kruskal(vector< threePair >& vec){
+    sort(vec.begin(),vec.end(),sortbythird);
+
     
-    else{
-        vec[rootB] += vec[rootA];   // updating total element in b
-        vec[rootA] = rootB;         // make a's root parent as that of 'b'
+    print2(vec);
+
+    int totalNodes = vec.size();
+
+    vector<int> array(totalNodes,-1);
+    
+
+    int MST = 0;
+
+    for(auto i=0; i<totalNodes; ++i){
+
+        int nodeWeight = vec[i].first;
+
+        int nodeOne = vec[i].second.first;
+        int nodeTwo = vec[i].second.second;
+
+        cout<<nodeWeight<<" "<<nodeOne<<" "<<nodeTwo<<endl;
+
+        if(root(array,nodeOne-1) != root(array,nodeTwo-1)){
+            // if not forming cycle then add perfrom Union of the nodes and add its weight to MST 
+            
+            Union(array,nodeOne-1,nodeTwo-1);
+            MST += nodeWeight;
+
+            cout<<"added node "<<nodeOne<<" & "<<nodeTwo <<" MST = "<<MST<<endl;
+
         }
+        
+
     }
 
-
-    cout<<" Union done "<<endl;
-
-
+    return MST;
 }
 
 
@@ -136,54 +133,12 @@ int main(){
     vec.push_back(make_pair(2,make_pair(3,6)));
 
 
-    // vec.push_back(make_pair(15,8.4));
-    // vec.push_back(make_pair(11,3.5));
-    // vec.push_back(make_pair(1,3.5));
-    // vec.push_back(make_pair(3,12.5));
-    // vec.push_back(make_pair(5,3.5));
 
-    // print(vec);
-
-    sort(vec.begin(),vec.end(),sortbythird);
-    print2(vec);
-
-    int totalNodes = vec.size();
-
-    vector<int> array(totalNodes,-1);
     
-
-    int MST = 0;
-
-    for(int i=0; i<totalNodes; ++i){
-
-        int nodeOne = vec[i].first;
-
-        int nodeTwo = vec[i].second.first;
-        int nodeWeight = vec[i].second.second;
-
-        cout<<nodeWeight<<" "<<nodeOne<<" "<<nodeTwo<<endl;
-
-        if(root(array,nodeOne-1) != root(array,nodeTwo-1)){
-            // if not forming cycle then add perfrom Union of the nodes and add its weight to MST 
-            
-            UnionByRank(array,nodeOne-1,nodeTwo-1);
-            MST += nodeWeight;
-
-            cout<<"added node "<<nodeOne<<" & "<<nodeTwo <<" MST = "<<MST<<endl;
-
-        }
-
-   
-
-        
-
-        
-
-    }
+    cout<<Kruskal(vec)<<endl;// answer is 19
 
 
 
-    cout<<MST<<endl;
     
 
 }

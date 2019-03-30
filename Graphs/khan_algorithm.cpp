@@ -6,7 +6,7 @@
 using namespace std;
 
 int FOO = 1;
-const int MAX = 1000001;
+static const int MAX = 1000001;
 vector<int> adjList[MAX];
 
 vector<int> in_degree(MAX,0);
@@ -103,3 +103,13 @@ int main(){
 
 }
 
+8 9
+1 2
+4 5
+8 7
+2 3
+5 6
+2 6
+2 7
+4 2
+8 5

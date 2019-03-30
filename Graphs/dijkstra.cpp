@@ -14,7 +14,7 @@ inline bool relaxation(int u, int v, int weight){
 
     int newValue = dist[u] + weight;
 
-    cout<<"inside relax --> "<<newValue<<dist[v];
+
     if(newValue < dist[v]){
         dist[v] = newValue;
         return true;
@@ -45,20 +45,20 @@ void dijkstra(int startNode){
 
         // mark the node as visited if not visited previously
         // iterate over it's adjacency list and 
-        // cout<<"**** "<<node<<visited[node]<<endl;
+    
         if(visited[node] == false){
             cout<<"executed for node "<<node<<endl;
             // node is said to be visited if all it's adjacent node is explored
 
             visited[node] = true;
-            // cout<<adjList[node].size()<<" %%%%%%%%%%%%%%%"<<endl;
+
             for(int i=0; i<adjList[node].size(); ++i){
-                cout<<"i = "<<i<<"&&&&&&&&&&&&&&&&&&"<<endl;
+    
                 int weight = adjList[node][i].first;
                 int node_v = adjList[node][i].second;
 
                 if(relaxation(node,node_v,weight) == true){
-                    cout<<"relaxation done for node adj = "<<node_v<<endl;
+            
                     pq.push({dist[node_v], node_v});
                 }
             }

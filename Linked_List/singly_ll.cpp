@@ -6,6 +6,12 @@ struct Node{
     Node* link;
 };
 
+Node* createNode(int value){
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->link = NULL;
+    newNode->data = value;
+}
+
 void insert(Node* head, int value){
 
     Node* move = head;
@@ -15,14 +21,8 @@ void insert(Node* head, int value){
 
 
     // creating a new node 
-    Node* newNode2 = (Node*)malloc(sizeof(Node));
-    newNode2->data = value;
-    newNode2->link = NULL;
-
-
-    move->link = newNode2; // link list ke last wala part  (NULL) ko update kara 
-
-    cout<<"Inserted "<<endl;
+    Node* nd = createNode(value);
+    move->link = nd; // link list ke last wala part  (NULL) ko update kara 
 
 }
 
@@ -31,22 +31,17 @@ void print(Node* head){
 
     Node* temp = head;
 
-
     while(temp != NULL){
         
         cout<<temp->data<<endl;
-
         temp = temp->link;
-
-        // if(temp == NULL){
-        //     break;
-        // }
     }
 
 
 }
 
 void deleteNode(Node* head, int value){
+    
     Node* prev = head;
     Node* current = head->link;
 
@@ -61,7 +56,7 @@ void deleteNode(Node* head, int value){
             // prev->link = current->link;
             Node* var2 = current->link
             
-            free(current)
+            free(current);
 
         }
 
@@ -101,8 +96,6 @@ int main(){
     insert(555);
     insert(123);
     print(head);
-
-
 
 
 

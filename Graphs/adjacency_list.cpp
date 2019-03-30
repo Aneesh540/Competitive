@@ -20,7 +20,7 @@ void input_graph(vector<vi >& v, int nodes, int edges){
      }
 }
 
-void adj_list(vector<vi >&v, int nodes){
+void adj_list(vector< vector<int> >&v, int nodes){
 
     for(int i=1; i<nodes+1; ++i){
 

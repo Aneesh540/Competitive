@@ -48,21 +48,23 @@ int findingMin(Node *root, int value)
 
 }
 
-Node* insert(Node* root, int data){
-
-    if (root == NULL){
-        root = createNode(data);
+void insert(Node*& root, int value){
+    
+    if(root == NULL){
+    
+        root =  createNode(value);
     }
-
-    else if (data < root->data){
-        root->left = insert(root->left,data);
+    
+    else if(root->data < value){
+        // insert right
+        
+        insert(root->right,value);
     }
-
+    
     else{
-        root->right = insert(root->right,data);
+        // insert left side
+        insert(root->left,value);
     }
-
-    return root;
 }
 
 bool isPresent(Node* root, int data){
@@ -122,17 +124,17 @@ int main(){
 
     Node* root_pointer = NULL;
 
-    root_pointer = insert(root_pointer,15);
-    root_pointer = insert(root_pointer,10);
-    root_pointer = insert(root_pointer,20);
-    root_pointer = insert(root_pointer,25);
-    root_pointer = insert(root_pointer,45);
-    root_pointer = insert(root_pointer,5);
-    root_pointer = insert(root_pointer,13);
-    root_pointer = insert(root_pointer,18);
-    root_pointer = insert(root_pointer,17) ;   
-    root_pointer = insert(root_pointer,23);
-    root_pointer = insert(root_pointer,24);
+    insert(root_pointer,15);
+    insert(root_pointer,10);
+    insert(root_pointer,20);
+    insert(root_pointer,25);
+    insert(root_pointer,45);
+    insert(root_pointer,5);
+    insert(root_pointer,13);
+    insert(root_pointer,18);
+    insert(root_pointer,17) ;   
+    insert(root_pointer,23);
+    insert(root_pointer,24);
     //  cout << isPresent(root_pointer,2) << endl;
     //  cout << isPresent(root_pointer, 20) << endl;
     //  cout << isPresent(root_pointer, 25) << endl;
